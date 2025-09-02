@@ -24,26 +24,6 @@ public_users.post("/register", (req,res) => {
 });
 const jwt = require('jsonwebtoken');
 
-// Login as a registered customer
-public_users.post("/customer/login", (req, res) => {
-  const { username, password } = req.body;
-
-  if (!username || !password) {
-    return res.status(400).json({ message: "Username and password are required" });
-  }
-
-  const user = users.find((user) => user.username === username && user.password === password);
-
-  if (!user) {
-    return res.status(401).json({ message: "Invalid username or password" });
-  }
-  const accessToken = jwt.sign({ username }, "access", { expiresIn: '1h' });
-  req.session.authorization = { accessToken };
-  return res.status(200).json({ message: "Login successful", token: accessToken });
-});
-
-
-
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
   //Write your code here
